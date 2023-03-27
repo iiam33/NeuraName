@@ -1,1 +1,1 @@
-# ml-name-generator
+# namelab
