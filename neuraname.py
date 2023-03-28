@@ -21,17 +21,32 @@ for name in names:
 
 itos = {i: s for s, i in stoi.items()}
 
-plt.figure(figsize=(20, 20))
-plt.imshow(N, cmap="Blues")
+# plt.figure(figsize=(20, 20))
+# plt.imshow(N, cmap="Blues")
 
-for i in range(27):
-    for j in range(27):
-        chstr = itos[i]+itos[j]
-        plt.text(j, i, chstr, ha="center", va="bottom", color="grey")
-        plt.text(j, i, N[i, j].item(), ha="center", va="top", color="grey")
+# for i in range(27):
+#     for j in range(27):
+#         chstr = itos[i]+itos[j]
+#         plt.text(j, i, chstr, ha="center", va="bottom", color="grey")
+#         plt.text(j, i, N[i, j].item(), ha="center", va="top", color="grey")
 
-plt.axis("off")
-plt.show()
+# plt.axis("off")
+# plt.show()
+
+ix = 0
+out = []
+
+while True:
+    p = N[ix].float()
+    p /= p.sum()
+    ix = torch.multinomial(p, num_samples=1, replacement=True).item()
+    out.append(itos[ix])
+
+    if ix == 0:
+        break
+
+# ix = torch.multinomial(p, num_samples=1, replacement=True)
+# print(itos[ix.item()])
 
 # print(N)
 # plt.imshow(N)
