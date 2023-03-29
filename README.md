@@ -1,1 +1,1 @@
-# NeuraName
+# neura-name
