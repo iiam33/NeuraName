@@ -48,7 +48,7 @@ itos = {i: s for s, i in stoi.items()}
 # 27, 27
 # 27,  1
 
-P = N.float()
+P = (N+1).float()
 P /= P.sum(1, keepdim=True)
 
 ix = 0
