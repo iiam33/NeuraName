@@ -29,7 +29,7 @@ g = torch.Generator().manual_seed(2147483647)
 W = torch.randn((27, 27), generator=g, requires_grad=True)
 # print(W)
 
-for _ in range(105):
+for _ in range(150):
     # forward pass
     # input of the neural network: one hot encoding
     x_encode = F.one_hot(xs, num_classes=27).float()
@@ -69,7 +69,7 @@ for _ in range(105):
 # ix = 0
 # out = []
 
-# g = torch.Generator().manual_seed(2147483647)
+g = torch.Generator().manual_seed(2147483647)
 
 itos = {i: s for s, i in stoi.items()}
 
