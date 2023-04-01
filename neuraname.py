@@ -33,17 +33,6 @@ itos = {i: s for s, i in stoi.items()}
 # plt.axis("off")
 # plt.show()
 
-ix = 0
-out = []
-
-while True:
-    p = N[ix].float()
-    p /= p.sum()
-    ix = torch.multinomial(p, num_samples=1, replacement=True).item()
-    out.append(itos[ix])
-
-    if ix == 0:
-        break
 
 # ix = torch.multinomial(p, num_samples=1, replacement=True)
 # print(itos[ix.item()])
@@ -53,3 +42,32 @@ while True:
 # plt.show()
 
 # print(sorted(bigram.items(), key=lambda b: -b[1]))
+
+# print(N)
+
+# 27, 27
+# 27,  1
+
+P = N.float()
+P /= P.sum(1, keepdim=True)
+
+ix = 0
+out = []
+
+g = torch.Generator().manual_seed(2147483647) 
+
+for _ in range(10):
+    ix = 0
+    out = []
+    while True:
+        p = P[ix]
+        # p /= p.sum()
+        ix = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
+        out.append(itos[ix])
+
+        if ix == 0:
+            break
+
+    print("".join(out))
+
+
