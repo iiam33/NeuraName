@@ -54,7 +54,7 @@ P /= P.sum(1, keepdim=True)
 ix = 0
 out = []
 
-g = torch.Generator().manual_seed(2147483647) 
+g = torch.Generator().manual_seed(2147483647)
 
 for _ in range(10):
     ix = 0
@@ -62,7 +62,8 @@ for _ in range(10):
     while True:
         p = P[ix]
         # p /= p.sum()
-        ix = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
+        ix = torch.multinomial(
+            p, num_samples=1, replacement=True, generator=g).item()
         out.append(itos[ix])
 
         if ix == 0:
@@ -70,4 +71,22 @@ for _ in range(10):
 
     print("".join(out))
 
+log_likelihood = 0.0
+n = 0
 
+for name in names:
+# for name in ["alvzin"]:
+    chars = ["."] + list(name) + ["."]
+    for ch1, ch2 in zip(chars, chars[1:]):
+        ix1 = stoi[ch1]
+        ix2 = stoi[ch2]
+        prob = P[ix1, ix2]
+        logprob = torch.log(prob)
+        log_likelihood += logprob
+        n += 1
+        # print(f'{ch1, ch2}: {prob:.4f} {logprob:.4f}')
+
+print(f'{log_likelihood=}')
+neg_log_likelihood = -log_likelihood
+print(f'{neg_log_likelihood=}')
+print(f'average of negative log_likelihood: {(neg_log_likelihood/n):.4f}')
