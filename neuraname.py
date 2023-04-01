@@ -45,31 +45,8 @@ itos = {i: s for s, i in stoi.items()}
 
 # print(N)
 
-# 27, 27
-# 27,  1
-
 P = (N+1).float()
 P /= P.sum(1, keepdim=True)
-
-ix = 0
-out = []
-
-g = torch.Generator().manual_seed(2147483647)
-
-for _ in range(10):
-    ix = 0
-    out = []
-    while True:
-        p = P[ix]
-        # p /= p.sum()
-        ix = torch.multinomial(
-            p, num_samples=1, replacement=True, generator=g).item()
-        out.append(itos[ix])
-
-        if ix == 0:
-            break
-
-    print("".join(out))
 
 log_likelihood = 0.0
 n = 0
@@ -90,3 +67,23 @@ print(f'{log_likelihood=}')
 neg_log_likelihood = -log_likelihood
 print(f'{neg_log_likelihood=}')
 print(f'average of negative log_likelihood: {(neg_log_likelihood/n):.4f}')
+
+ix = 0
+out = []
+
+g = torch.Generator().manual_seed(2147483647)
+
+for _ in range(10):
+    ix = 0
+    out = []
+    while True:
+        p = P[ix]
+        # p /= p.sum()
+        ix = torch.multinomial(
+            p, num_samples=1, replacement=True, generator=g).item()
+        out.append(itos[ix])
+
+        if ix == 0:
+            break
+
+    print("".join(out))
